@@ -1,0 +1,20 @@
+.formField {
+    display: flex;
+    flex-direction: column;
+    width: 20em; 
+}
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+}
+
+.inputField {
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown {
+    margin-top: 1em; 
+}
+
