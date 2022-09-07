@@ -1,28 +1,20 @@
-import { Link, useNavigate } from "react-router-dom"
+
+import { CustomerNav } from "./CustomerNav"
+import { EmployeeNav } from "./EmployeeNav"
 import "./NavBar.css"
 
 export const NavBar = () => {
-    const navigate = useNavigate()
-    const localUser = localStorage.getItem("kandy_user")
-    const localUserObject = JSON.parse(localUser)
+    const localHoneyUser = localStorage.getItem("kandy_user") 
+    const honeyUserObject = JSON.parse(localHoneyUser)
 
-    return (
-        <ul className="navbar">
-            {
-                localUserObject.staff
-                ? <Link className="products" to="/products">Products</Link>// staff view
-                : ""//customer view
-            }
-            <li className="navbar__item navbar__logout">
-                <Link className="navbar__link" to="" onClick={() => {
-                    localStorage.removeItem("kandy_user")
-                    navigate("/", {replace: true})
-                }}>Logout</Link>
-            </li>
-            <li className="navbar_locations">
-                <Link className="locations" to="/locations">Store Locations</Link>
-            </li>
-        </ul>
-    )
+    if (honeyUserObject.staff) {
+        //return navication for employees
+        return <EmployeeNav />
+
+    }
+    else {
+        //return navigation for customers
+        return <CustomerNav />
+    }
 }
 

@@ -12,6 +12,9 @@ export const ProductList = () => {
 
     const navigate = useNavigate()
 
+    const localUser = localStorage.getItem("kandy_user")
+    const localUserObject = JSON.parse(localUser)
+
     useEffect( //fetching products
         () => {
             fetch(`http://localhost:8088/products?_sort=candyName&_order=asc&_expand=productType`) //this fetches a sorted products array with the expanded productTypes array on it 
@@ -45,8 +48,14 @@ export const ProductList = () => {
     
 
     return <>
-    <button onClick = {() =>setTop(true)}>Top Priced</button>
-    <button onClick = {() =>navigate("/products/create")}>Add Product</button>
+    {
+        localUserObject.staff
+        ? <>
+        <button onClick = {() =>setTop(true)}>Top Priced</button>
+        <button onClick = {() =>navigate("/products/create")}>Add Product</button>
+        </>
+        : <button onClick = {() =>setTop(true)}>Top Priced</button>
+    }
     <h2>Products</h2>
     <article className="productList">
         {   
