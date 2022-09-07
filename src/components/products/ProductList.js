@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { Product } from "./Product"
 import "./ProductList.css"
 
 
@@ -9,6 +10,14 @@ export const ProductList = () => {
     const [filteredProducts, setFiltered] = useState([])
     
     const [topProducts, setTop] = useState(false)
+
+    const [purchase, setPurchase] = useState( 
+        {
+            amount: 0
+        }
+    )
+
+    const [customers, setCustomers] = useState([])
 
     const navigate = useNavigate()
 
@@ -22,6 +31,14 @@ export const ProductList = () => {
             .then(
                 (productArray) => {
                     setProducts(productArray)
+                }
+            )
+
+            fetch(`http://localhost:8088/customers`) 
+            .then(response => response.json())
+            .then(
+                (customerArray) => {
+                    setCustomers(customerArray)
                 }
             )
         },
@@ -45,7 +62,8 @@ export const ProductList = () => {
         },
         [topProducts]
     )
-    
+
+
 
     return <>
     {
@@ -61,7 +79,11 @@ export const ProductList = () => {
         {   
             filteredProducts.map(
                 (product) => {
-                    return <div key={`product--${product.id}`}>{product.candyName}, Price: ${product.price}, Type: {product.productType.type}</div>
+                    return <Product product={product} 
+                    purchase={purchase} 
+                    setPurchase={setPurchase}
+                    localUserObject={localUserObject} 
+                    customers={customers} key={product.id}/>
                 }
             )
                 

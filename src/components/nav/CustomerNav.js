@@ -13,7 +13,10 @@ export const CustomerNav = () => {
             <li className="navbar_products">
                 <Link className="find_candy" to="/findCandy">Find Candy</Link>
             </li>
-            <li className="navbar_locations">
+            <li className="navbar_products">
+                <Link className="orders" to="/orders">My Orders</Link>
+            </li>
+            <li className="navbar_products">
                 <Link className="locations" to="/locations">Store Locations</Link>
             </li>
             <li className="navbar__item navbar__logout">

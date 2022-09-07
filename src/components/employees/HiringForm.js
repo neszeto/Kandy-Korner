@@ -14,8 +14,10 @@ export const HiringForm = () => {
     })
 
     const [locations, setLocations] = useState([])
-    const [users, setUsers] = useState([])
+  
     const navigate = useNavigate()
+
+    
 
     useEffect(
         () => {
@@ -28,28 +30,13 @@ export const HiringForm = () => {
         []
     )
 
-    useEffect(
-        () => {
-            fetch(`http://localhost:8088/users`)
-            .then(response => response.json())
-            .then(
-                (userArray) => setUsers(userArray)
-            )
-        },
-        []
-    )
+
 
 
 const HireEmployeeButton = (event) => {
     event.preventDefault()
-
-
-    const employeeToSendToAPI = {
-        startDate: userInput.hiringDate,
-        payRate: userInput.rate,
-        locationId: userInput.idForLocation,
-        userId: users.length + 1
-    }
+    
+    
 
     const userToSendToAPI = {
         name: userInput.employeeName,
@@ -65,7 +52,16 @@ const HireEmployeeButton = (event) => {
         },
         body: JSON.stringify(userToSendToAPI)
     })
-    .then(() => {
+    .then(response=>response.json())
+    .then((updatedUsersArray) => {
+        
+        const employeeToSendToAPI = {
+            startDate: userInput.hiringDate,
+            payRate: userInput.rate,
+            locationId: userInput.idForLocation,
+            userId: updatedUsersArray.id
+        }
+
         return fetch(`http://localhost:8088/employees`, {
             method: "POST",
             headers: {
